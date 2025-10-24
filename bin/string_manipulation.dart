@@ -121,4 +121,30 @@ void main(List<String> args) {
     position = end + '</h1>'.length;
   }
 
+  final headings = RegExp(r'<h1>(.+)</h1>');
+  final matches = headings.allMatches(myText);
+  for (final match in matches) {
+    print(match.group(1));
+  }
+
+  // Validate Email Address using RegExp in Dart(2)
+  String validEmail = "test@example.com";
+  String invalidEmail1 = "invalid-email";
+  String invalidEmail2 = "user@.com";
+  String invalidEmail3 = "user@domain.";
+
+  print("'$validEmail' is valid: ${isValidEmail(validEmail)}");  // true
+  print("'$invalidEmail1' is valid: ${isValidEmail(invalidEmail1)}");  // false
+  print("'$invalidEmail2' is valid: ${isValidEmail(invalidEmail2)}");  // false
+  print("'$invalidEmail3' is valid: ${isValidEmail(invalidEmail3)}");  // false
+
+}
+
+// Validate Email Address using RegExp in Dart(1)
+bool isValidEmail(String email) {
+  // A common regular expression for email validation.
+  // This pattern attempts to match a typical email format.
+  final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',);
+
+  return emailRegex.hasMatch(email);
 }
