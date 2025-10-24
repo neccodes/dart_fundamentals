@@ -77,4 +77,48 @@ void main(List<String> args) {
     print('Your password is OK!');
   }
 
+  if (password.length < 12) {
+    print('Your password must have at least 12 characters!');
+  }
+
+  final goodLength = RegExp(r'.{12,}');
+  if (!password.contains(goodLength)) {
+    print('Your password must be at least 12 characters long!');
+  }
+
+  const htmlText = '''
+  <!DOCTYPE html>
+  <html>
+  <body>
+  <h1>Dart Tutorial</h1>
+  <p>Dart is my favorite language.</p>      
+  </body>
+  </html>
+  ''';
+  var heading = htmlText.substring(42, 55);
+  print('heading = $heading'); // Dart Tutorial
+
+  final start = htmlText.indexOf('<h1>') + '<h1>'.length;
+  final end = htmlText.indexOf('</h1>');
+  heading = htmlText.substring(start, end);
+  print('heading = $heading');
+
+  // Finding Multiple Matches
+  const myText = '''
+  <h1>Dart Tutorial</h1>
+  <h1>Flutter Tutorial</h1>
+  <h1>Other Tutorials</h1>
+  ''';
+  var position = 0;
+  while(true) {
+    var start = myText.indexOf('<h1>', position) + '<h1>'.length;
+    var end = myText.indexOf('</h1>', position);
+    if (start == -1 || end == -1) {
+      break;
+    }
+    final heading = myText.substring(start, end);
+    print('heading = $heading');
+    position = end + '</h1>'.length;
+  }
+
 }
