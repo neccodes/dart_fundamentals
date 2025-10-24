@@ -138,6 +138,18 @@ void main(List<String> args) {
   print("'$invalidEmail2' is valid: ${isValidEmail(invalidEmail2)}");  // false
   print("'$invalidEmail3' is valid: ${isValidEmail(invalidEmail3)}");  // false
 
+  // Function to extract time and lyrics using a regular expression.
+  const line = '[00:12.34]Row, row, row your boat';
+  final result = extractTimeAndLyrics(line);
+
+  if (result != null) {
+    print('Original String: "$line"');
+    print('Extracted Time: ${result['time']}');
+    print('Extracted Lyrics: ${result['lyrics']}');
+  } else {
+    print('No match found for the given string.');
+  }
+
 }
 
 // Validate Email Address using RegExp in Dart(1)
@@ -147,4 +159,26 @@ bool isValidEmail(String email) {
   final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',);
 
   return emailRegex.hasMatch(email);
+}
+
+// Function to extract time and lyrics using a regular expression.
+Map<String, String>? extractTimeAndLyrics(String line) {
+  // A regex pattern to match the timestamp and lyrics.
+  // Group 1: (.*?) - The content inside the square brackets (non-greedy).
+  // Group 2: (.*) - Everything after the brackets.
+  final regex = RegExp(r'\[(.*?)\](.*)');
+
+  // Attempt to find a match in the input string.
+  final match = regex.firstMatch(line);
+
+  // If a match is found, extract the groups and return them in a Map.
+  if (match != null) {
+    return {
+      'time': match.group(1)!.trim(),
+      'lyrics': match.group(2)!.trim(),
+    };
+  }
+
+  // If no match is found, return null.
+  return null;
 }
